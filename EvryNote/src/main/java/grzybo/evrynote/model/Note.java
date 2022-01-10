@@ -26,7 +26,6 @@ public class Note {
     @JoinColumn(name = "author")
     private UserModel author;
 
-
     public Note() {}
 
     public Note(Long id, String title, String body) {
@@ -39,6 +38,7 @@ public class Note {
         this.id = id;
         this.title = note.title;
         this.body = note.body;
+        this.author = note.author;
     }
 
 

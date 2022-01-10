@@ -11,6 +11,7 @@ public class LoginController {
 
     @PostMapping("/login")
     public String login(@RequestBody LoginCredentials loginCredentials){
+
         return "Login Successful";
     }
 
