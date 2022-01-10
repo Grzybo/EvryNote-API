@@ -14,11 +14,12 @@ public class EvryNoteApplication extends SpringBootServletInitializer {
     public static void main(String[] args) {
 
         ApplicationContext applicationContext = SpringApplication.run(EvryNoteApplication.class, args);
-        for (String s : applicationContext.getBeanDefinitionNames()){System.out.println(s);}
+        //for (String s : applicationContext.getBeanDefinitionNames()){System.out.println(s);}
         System.out.println("HELLO EVRYNOTE!");
 
         //TODO foldery
         //TODO w notatce: data utworzenia + data ost. modyfikacji
         //TODO get notes by user
+        //TODO poprawic cashowanie - po dodaniu note, dalej nie ma nowgo w GET api/note
     }
 }

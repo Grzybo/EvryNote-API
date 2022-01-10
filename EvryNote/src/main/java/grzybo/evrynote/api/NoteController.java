@@ -18,9 +18,11 @@ import java.util.stream.Collectors;
 public class NoteController {
 
     private final NoteService noteService;
+    private final NoteDtoMapper noteDtoMapper;
 
     @Autowired
-    public NoteController(NoteService noteService) {
+    public NoteController(NoteService noteService, NoteDtoMapper noteDtoMapper) {
+        this.noteDtoMapper = noteDtoMapper;
         this.noteService = noteService;
     }
 

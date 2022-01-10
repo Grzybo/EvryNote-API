@@ -25,7 +25,6 @@ public class NoteService {
         this.noteRepo = noteRepo;
     }
 
-
     public List<Note> getAll(){return noteRepo.findAll();}
 
     public List<Note> getAllNotesByUser(){return noteRepo.findAll();}
