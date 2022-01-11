@@ -15,5 +15,6 @@ public class NoteDTO {
     private String title;
     private String body;
     private LocalDateTime created;
+    private LocalDateTime modified;
     private Long authorID;
 }

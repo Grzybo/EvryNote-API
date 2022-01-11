@@ -17,7 +17,7 @@ import java.util.Optional;
 @Service
 public class NoteService {
 
-    private static final int SIZE = 2;
+    private static final int SIZE = 10;
     private final NoteRepository noteRepo;
 
     @Autowired
@@ -32,7 +32,7 @@ public class NoteService {
     @Cacheable(cacheNames = "PageOfNotes")
     public List<Note> getAllPageable(int page, Sort.Direction sort){return noteRepo.findAllNotes(PageRequest.of(page,SIZE, Sort.by(sort, "title")));}
 
-    public Note addNote(Note note) {return noteRepo.save(note);}
+    public Note addNote(Note note) {return noteRepo.save(new Note(note));}
 
     @Cacheable(cacheNames = "SingleNote", key = "#id")
     public Optional<Note> getByID(Long id){return noteRepo.findById(id);}
@@ -41,8 +41,10 @@ public class NoteService {
     public void deleteByID(Long id){noteRepo.deleteById(id);}
 
     @CachePut(cacheNames = "SingleNote", key = "#result.id")
-    public Note updateByID(Long id, Note note){
-        return noteRepo.save(new Note(id, note));
+    public Note updateByID(Long id, Note newNote){
+        Note note = getByID(id).get();
+        note.update(newNote);
+        return noteRepo.save(note);
     }
 
 }

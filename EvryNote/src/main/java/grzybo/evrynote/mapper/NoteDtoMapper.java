@@ -20,6 +20,7 @@ public class NoteDtoMapper {
                 .title(note.getTitle())
                 .body(note.getBody())
                 .created(note.getCreated())
+                .modified(note.getModified())
                 .authorID(note.getAuthor().getId())
                 .build();
     }

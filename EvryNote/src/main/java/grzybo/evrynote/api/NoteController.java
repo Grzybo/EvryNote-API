@@ -41,7 +41,6 @@ public class NoteController {
     * */
 
 
-
     @PostMapping
     public Note add(@NonNull @RequestBody Note note){return noteService.addNote(note);}
 

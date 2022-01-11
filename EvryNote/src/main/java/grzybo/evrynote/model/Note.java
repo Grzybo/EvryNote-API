@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Getter
 @Setter
@@ -26,17 +27,21 @@ public class Note {
     @Column(name = "created_date")
     private LocalDateTime created;
 
+    @Column(name = "lastmodify_date")
+    private LocalDateTime modified;
+
     @ManyToOne
     @JoinColumn(name = "author")
     private UserModel author;
 
     public Note() {}
 
-    // nowy obiekt
-    public Note(Long id, String title, String body) {
-        this.id = id;
-        this.title = title;
-        this.body = body;
+    // nowy obiekt - konstruktor kopiujący
+    public Note(Note note) {
+        this.id = note.id;
+        this.title = note.title;
+        this.body = note.body;
+        this.author = note.author;
         this.created = LocalDateTime.now();
     }
 
@@ -46,5 +51,24 @@ public class Note {
         this.title = note.title;
         this.body = note.body;
         this.author = note.author;
+        this.created = note.created;
+        this.modified = LocalDateTime.now();
+    }
+
+    public void update(Note note){
+        this.id = id;
+        if(note.title != null)this.title = note.title;
+        if(note.body != null)this.body = note.body;
+        if(note.author != null)this.author = note.author;
+        if(note.created != null)this.created = note.created;
+        this.modified = LocalDateTime.now();
+    }
+
+    public Note(String title, String body, LocalDateTime created, LocalDateTime modified, UserModel author) {
+        this.title = title;
+        this.body = body;
+        this.created = created;
+        this.modified = modified;
+        this.author = author;
     }
 }
