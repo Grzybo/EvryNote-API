@@ -12,9 +12,12 @@ import java.util.List;
 @Repository
 public interface NoteRepository extends JpaRepository<Note, Long> {
 
-    @Query("Select n From Note n left join fetch n.author")
+    @Query("Select n From Note n")
     List<Note> findAllNotes(Pageable page);
 
-    //@Query("Select n From Note n WHERE n.author.id =")
-    //List<Note> findAllNotesByAuthor(Pageable page, Long id);
+    @Query("Select n From Note n WHERE n.author.id = ?1")
+    List<Note> findAllNotesByAuthor(Pageable page, Long id);
+
+    @Query("Select n From Note n WHERE n.folder.id = ?1")
+    List<Note> findAllNotesInFolder(Long id);
 }

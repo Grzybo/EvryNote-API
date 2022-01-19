@@ -25,6 +25,9 @@ public class UserModel {
     @Column(name = "enabled")
     private boolean enabled;
 
+    @ManyToMany(mappedBy = "usersSharedTo", fetch = FetchType.LAZY)
+    private List<Note> notes;
+
     public UserModel(String userName, String password) {
         this.username = userName;
         this.password = password;

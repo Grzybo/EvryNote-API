@@ -73,7 +73,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         for (UserModel u : userList){
             if(u.isEnabled()){
                 users.put(u.getUsername(), "{noop}"+u.getPassword()+",ROLE_USER,enabled"); //TODO do poprawy
-                System.out.println(u.getUsername());
+                //System.out.println(u.getUsername());
             }
         }
         users.put("test","{noop}test,ROLE_USER,enabled");

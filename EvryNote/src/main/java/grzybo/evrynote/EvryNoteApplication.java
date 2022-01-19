@@ -17,9 +17,8 @@ public class EvryNoteApplication extends SpringBootServletInitializer {
         //for (String s : applicationContext.getBeanDefinitionNames()){System.out.println(s);}
         System.out.println("HELLO EVRYNOTE!");
 
-        //TODO foldery
-        //TODO w notatce: data utworzenia + data ost. modyfikacji
         //TODO get notes by user
         //TODO poprawic cashowanie - po dodaniu note, dalej nie ma nowgo w GET api/note
+        //TODO get note by id sie pieprzy po edycji tego note
     }
 }

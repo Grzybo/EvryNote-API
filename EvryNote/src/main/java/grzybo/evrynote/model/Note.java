@@ -1,14 +1,18 @@
 package grzybo.evrynote.model;
 
+import grzybo.evrynote.dto.NoteDTO;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Getter
 @Setter
+@Builder
 @Entity
 @Table(name = "NOTES")
 public class Note {
@@ -27,12 +31,23 @@ public class Note {
     @Column(name = "created_date")
     private LocalDateTime created;
 
-    @Column(name = "lastmodify_date")
+    @Column(name = "modified_date")
     private LocalDateTime modified;
 
     @ManyToOne
-    @JoinColumn(name = "author")
+    @JoinColumn(name = "fk_author_id")
     private UserModel author;
+
+    @ManyToOne
+    @JoinColumn(name = "fk_folder_id")
+    private Folder folder;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "USER_NOTES",
+            joinColumns = { @JoinColumn(name = "fk_note_id") },
+            inverseJoinColumns = { @JoinColumn(name = "fk_user_id") })
+    private List<UserModel> usersSharedTo;
 
     public Note() {}
 
@@ -42,7 +57,20 @@ public class Note {
         this.title = note.title;
         this.body = note.body;
         this.author = note.author;
-        this.created = LocalDateTime.now();
+        this.folder = note.folder;
+        this.usersSharedTo = note.getUsersSharedTo();
+        this.created = this.modified = LocalDateTime.now();
+    }
+
+    public Note(Long id, String title, String body, LocalDateTime created, LocalDateTime modified, UserModel author, Folder folder, List<UserModel> usersSharedTo) {
+        this.id = id;
+        this.title = title;
+        this.body = body;
+        this.created = created;
+        this.modified = modified;
+        this.author = author;
+        this.folder = folder;
+        this.usersSharedTo = usersSharedTo;
     }
 
     // update
@@ -70,5 +98,19 @@ public class Note {
         this.created = created;
         this.modified = modified;
         this.author = author;
+    }
+
+    @Override
+    public String toString() {
+        return "Note{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", body='" + body + '\'' +
+                ", created=" + created +
+                ", modified=" + modified +
+                ", author=" + author +
+                ", folder=" + folder +
+                ", usersSharedTo=" + usersSharedTo +
+                '}';
     }
 }

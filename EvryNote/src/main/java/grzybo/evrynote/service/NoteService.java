@@ -32,7 +32,17 @@ public class NoteService {
     @Cacheable(cacheNames = "PageOfNotes")
     public List<Note> getAllPageable(int page, Sort.Direction sort){return noteRepo.findAllNotes(PageRequest.of(page,SIZE, Sort.by(sort, "title")));}
 
-    public Note addNote(Note note) {return noteRepo.save(new Note(note));}
+    public List<Note> getAllPageableByAuthor(int page, Sort.Direction sort, Long authorId){
+        return noteRepo.findAllNotesByAuthor(PageRequest.of(page,SIZE, Sort.by(sort, "title")), authorId);
+    }
+
+    public List<Note> getAllInFolder(Long folderId){
+        return noteRepo.findAllNotesInFolder(folderId);
+    }
+
+    public Note addNote(Note note) {
+        note.toString();
+        return noteRepo.save(new Note(note));}
 
     @Cacheable(cacheNames = "SingleNote", key = "#id")
     public Optional<Note> getByID(Long id){return noteRepo.findById(id);}
